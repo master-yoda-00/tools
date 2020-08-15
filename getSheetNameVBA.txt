@@ -1,0 +1,44 @@
+Sub getStatus()
+    
+    '繰り返し用変数
+    Dim i As Long
+    
+    'シート数の格納用
+    Dim mySheetCnt As Long
+    
+    'シート名の格納用
+    Dim mySheetName As String
+    
+    '入力された値の列の格納用（A列なら1,B列なら2…）
+    Dim targetRow As Integer
+    
+    '入力された値の最終行の格納用
+    Dim myLastRow As String
+    
+    '最終行の調整用の変数
+    Dim adjustCnt As Integer
+
+
+    '定数(ここを使ってる管理簿を見ながら調整してください)
+    targetRow = 2
+    adjustCnt = 10
+    
+    'ブック内のシート数の取得
+    mySheetCnt = ThisWorkbook.Sheets.Count
+
+    For i = 1 To mySheetCnt
+        
+        '取得したい情報(シート名)
+        mySheetName = Sheets(i).Name
+        
+        '取得したい情報(B列の最終行)
+        myLastRow = Sheets(i).Cells(Rows.Count, targetRow).End(xlUp).Row
+        '
+        myLastRow = myLastRow + adjustCnt
+        
+        '出力
+        Sheets("Sheet1").Cells(i, 2).Value = mySheetName
+        Sheets("Sheet1").Cells(i, 3).Value = myLastRow
+    Next i
+    
+End Sub
